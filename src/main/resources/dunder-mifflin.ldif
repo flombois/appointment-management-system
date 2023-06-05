@@ -1,0 +1,65 @@
+dn: dc=dunder-mifflin,dc=com
+objectclass: top
+objectclass: domain
+objectclass: extensibleObject
+dc: dunder-mifflin
+
+dn: ou=departments,dc=dunder-mifflin,dc=com
+objectclass: top
+objectclass: organizationalUnit
+ou: groups
+
+dn: ou=managers,ou=departments,dc=dunder-mifflin,dc=com
+objectclass: top
+objectclass: organizationalUnit
+ou: sales
+
+dn: ou=sales,ou=departments,dc=dunder-mifflin,dc=com
+objectclass: top
+objectclass: organizationalUnit
+ou: sales
+
+dn: ou=accountancy,ou=departments,dc=dunder-mifflin,dc=com
+objectclass: top
+objectclass: organizationalUnit
+ou: accountancy
+
+dn: uid=michaelscott,ou=managers,dc=dunder-mifflin,dc=com
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+cn: Michael Scott
+sn: Scott
+uid: michaelscott
+userPassword: password
+
+dn: uid=jimhalpert,ou=sales,dc=dunder-mifflin,dc=com
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+cn: Jim
+sn: Halpert
+uid: jimhalpert
+userPassword: password
+
+dn: uid=dwightschrute,ou=sales,dc=dunder-mifflin,dc=com
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+cn: Dwight
+sn: Schrute
+uid: dwightschrute
+userPassword: password
+
+dn: uid=kevinmalone,ou=accountancy,dc=dunder-mifflin,dc=com
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+cn: Kevin
+sn: Malone
+uid: kevinmalone
+userPassword: password

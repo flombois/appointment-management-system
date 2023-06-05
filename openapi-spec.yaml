@@ -1,0 +1,249 @@
+openapi: 3.0.3
+info:
+  title: Appointment Management System API
+  description: API documentation for the appointment management system
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/api
+    description: Local development server
+paths:
+  /register:
+    post:
+      summary: Register a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthenticationRequest'
+      responses:
+        '200':
+          description: User registration successful
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModel'
+  /login:
+    post:
+      summary: User login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthenticationRequest'
+      responses:
+        '200':
+          description: User login successful
+  /users:
+    get:
+      summary: Get all users
+      responses:
+        '200':
+          description: List of all users
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserList'
+        '401':
+          description: "Unauthorized"
+  /users/{id}:
+    get:
+      summary: Get User by ID
+      responses:
+        '200':
+          description: User details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  /service-providers:
+    get:
+      summary: Get all service providers
+      responses:
+        '200':
+          description: List of all service providers
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceProviderList'
+    post:
+      summary: Create a new service provider
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceProvider'
+      responses:
+        '201':
+          description: Service provider details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceProvider'
+  /service-provider/{id}:
+    get:
+      summary: Get service provider by ID
+      responses:
+        '200':
+          description: Service provider details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceProvider'
+    delete:
+      summary: Delete service provider by ID
+      responses:
+        '204':
+          description: Service provider deleted successfully
+  /appointments:
+    get:
+      summary: Get all appointments
+      responses:
+        '200':
+          description: List of all appointments
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppointmentList'
+    post:
+      summary: Create a new appointment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Appointment'
+      responses:
+        '201':
+          description: Appointment details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Appointment'
+  /appointments/{id}:
+    get:
+      summary: Get appointment by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Appointment details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Appointment'
+    delete:
+      summary: Delete appointment by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Appointment deleted successfully
+
+
+components:
+  schemas:
+    ErrorModel:
+      type: object
+      properties:
+        error:
+          type: string
+
+    AuthenticationRequest:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+      required:
+        - username
+        - password
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        username:
+          type: string
+          items:
+            $ref: '#/components/schemas/User'
+    UserList:
+      type: array
+    ServiceProvider:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+      required:
+        - name
+    ServiceProviderList:
+      type: array
+      items:
+        $ref: '#/components/schemas/ServiceProvider'
+    Appointment:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        status:
+          type: string
+          enum:
+            - REQUESTED
+            - APPROVED
+            - REJECTED
+            - CANCELED
+            - COMPLETED
+      required:
+        - startTime
+        - endTime
+    AppointmentList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Appointment'
+    AppointmentUpdateRequest:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        status:
+          type: string
+          enum:
+            - REQUESTED
+            - APPROVED
+            - REJECTED
+            - CANCELED
+            - COMPLETED

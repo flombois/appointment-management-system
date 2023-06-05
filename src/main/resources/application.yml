@@ -1,0 +1,28 @@
+spring:
+  ldap:
+    urls:
+     - ldap://localhost:18889
+    base: dc=example,dc=com
+    username: uid=admin,ou=system
+    password: secret
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql:appointments
+    name: appointments
+    username: postgres
+    password: postgres
+
+  jpa:
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+
+  liquibase:
+    change-log: liquibase.changelog.sql
+    url: ${spring.datasource.url}
+    driver-class-name: ${spring.datasource.driver-class-name}
+    user: ${spring.datasource.username}
+    password: ${spring.datasource.password}
